@@ -14,17 +14,31 @@ namespace forecast.Controllers
         [HttpGet("js")]
         public FilepathDTO GetJs()
         {
-            var jsFiles = Directory.GetFiles("static/js");
-            var jsFile = jsFiles.SingleOrDefault(dir => dir.EndsWith("js"));
-            return new FilepathDTO(jsFile);
+            var rootDir = Directory.GetCurrentDirectory();
+            var fullPath = Path.Combine(rootDir, "ClientApp", "build", "static", "js");
+            if (!Directory.Exists(fullPath))
+            {
+                return new FilepathDTO("/static/js/bundle.js");
+            }
+            var jsFiles = Directory.GetFiles(fullPath);
+            var jsFile = jsFiles.SingleOrDefault(file => file.EndsWith("js"));
+            var jsFileName = Path.GetFileName(jsFile);
+            return new FilepathDTO("/static/js/" + jsFileName);
         }
 
         [HttpGet("css")]
         public FilepathDTO GetCss()
         {
-            var jsFiles = Directory.GetFiles("static/css");
-            var jsFile = jsFiles.SingleOrDefault(dir => dir.EndsWith("css"));
-            return new FilepathDTO(jsFile);
+            var rootDir = Directory.GetCurrentDirectory();
+            var fullPath = Path.Combine(rootDir, "ClientApp", "build", "static", "css");
+            if (!Directory.Exists(fullPath))
+            {
+                return new FilepathDTO();
+            }
+            var jsFiles = Directory.GetFiles(fullPath);
+            var jsFile = jsFiles.SingleOrDefault(file => file.EndsWith("css"));
+            var jsFileName = Path.GetFileName(jsFile);
+            return new FilepathDTO("/static/css/" + jsFileName);
         }
     }
 }
