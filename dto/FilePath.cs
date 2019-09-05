@@ -1,4 +1,4 @@
-namespace forecast.Models
+namespace forecast.DTO
 {
     public class FilepathDTO
     {

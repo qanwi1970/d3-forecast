@@ -1,3 +1,5 @@
+using forecast.Repositories;
+using forecast.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -21,6 +23,9 @@ namespace forecast
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSingleton<IScheduleRepository, ScheduleRepository>();
+            services.AddSingleton<IScheduleService, ScheduleService>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
